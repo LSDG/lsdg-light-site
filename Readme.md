@@ -1,5 +1,4 @@
-# lsdg-light-site Readme
+# LSDG Light Site
 
-The lsdg-light-site project is an omega-wf based web application.
-
-**TODO**: Write an actual readme.
+This is a simple webpage for controlling the light controller (a Raspberry Pi) for our lighting show. It's optimized for
+a phone screen, since it's more likely that people will be using phones to control it, rather than laptops.

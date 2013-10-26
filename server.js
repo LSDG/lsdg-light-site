@@ -6,13 +6,18 @@
 
 var path = require('path');
 var app = require('omega-wf').app;
+var views = require('./server/views');
 
 // ---------------------------------------------------------------------------------------------------------------------
 
 app.router.add(
     {
-        url: '/static/*',
-        path: path.join(__dirname, 'static')
+        url: '/*',
+        path: path.join(__dirname, 'build')
+    },
+    {
+        url: /^\/(?!admin)/,
+        get: views.index
     }
 );
 

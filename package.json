@@ -1,23 +1,31 @@
 {
-    "name": "lsdg-light-site",
-    "version": "0.0.0",
-    "description": "An omega-wf web application.",
-    "main": "server.js",
-    "dependencies": {
-        "omega-wf": "latest"
-    },
-    "devDependencies": {},
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node server.js",
-        "dump": "node -e \"require('omega-wf').utils.dump()\"",
-        "sync": "node -e \"require('omega-wf').utils.sync()\"",
-        "drop": "node -e \"require('omega-wf').utils.drop()\""
-    },
-    "repository": "",
-    "keywords": [
-        "omega-wf"
-    ],
-    "author": "Your Name <your.email@example.com>",
-    "license": "MIT"
+  "name": "lsdg-light-site",
+  "version": "0.1.0",
+  "description": "A website for controlling the lsdg lighting project.",
+  "main": "server.js",
+  "dependencies": {
+    "lodash": "latest",
+    "omega-wf": "latest"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-develop": "~0.2.2",
+    "grunt-contrib-less": "~0.7.0",
+    "grunt-html2js": "~0.1.8",
+    "grunt-contrib-copy": "~0.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dump": "node -e \"require('omega-wf').utils.dump()\"",
+    "sync": "node -e \"require('omega-wf').utils.sync()\"",
+    "drop": "node -e \"require('omega-wf').utils.drop()\""
+  },
+  "repository": "",
+  "keywords": [
+    "omega-wf"
+  ],
+  "author": "Christopher S. Case <chris.case@g33xnexus.com>",
+  "license": "MIT"
 }
