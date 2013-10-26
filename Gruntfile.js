@@ -57,12 +57,12 @@ module.exports = function(grunt) {
                 file: 'server.js'
             }
         },
+        clean: ["build/index.html"],
         copy: {
             lightsite: {
-                src: '<%= project.index %>',
+                src: '../<%= project.index %>',
                 expand: true,
-                cwd: 'build/',
-                filter: 'isFile',
+                cwd: 'build',
                 flatten: true,
                 dest: 'build/'
             }
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
             },
             copy: {
                 files: ['client/index.html'],
-                tasks: ['copy'],
+                tasks: ['clean', 'copy'],
                 options: {
                     atBegin: true
                 }
@@ -106,6 +106,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('build', ['less', 'systems_js', 'html2js']);
+    grunt.registerTask('build', ['clean', 'less', 'systems_js', 'html2js']);
 };

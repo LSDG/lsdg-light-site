@@ -27,7 +27,7 @@ secret = "8754c3dade6a37b834461bb9ab4aa78015999e372405a2c8b07a82d6ff440ccd174ee8
 // Configure swig
 swig.init({
     root: './build',
-    cache: DEBUG
+    cache: !DEBUG
 });
 
 // Connect Middleware
