@@ -12,6 +12,10 @@ var views = require('./server/views');
 
 app.router.add(
     {
+        url: '/vendor/*',
+        path: path.join(__dirname, 'vendor')
+    },
+    {
         url: '/*',
         path: path.join(__dirname, 'build')
     },
