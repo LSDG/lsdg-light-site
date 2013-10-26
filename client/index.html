@@ -1,8 +1,48 @@
-<html>
-    <head>
-        <title>LSDG Lights</title>
-    </head>
-    <body>
-        <h1>LSDG LIGHTS</h1>
-    </body>
+<!DOCTYPE html>
+<html lang="en" data-ng-app="lights">
+<head>
+    <meta charset="utf-8">
+    <title>LSDG Light Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A light controller for the LSDG Christmas Lightshow.">
+    <meta name="author" content="Christopher S. Case">
+
+    <!-- Turn off IE Compatibility mode, for Persona support -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+    <!-- These scripts must be at the start of the page -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-2.0.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-resource.min.js"></script>
+    <script src="/vendor/ui-bootstrap/ui-bootstrap-tpls-0.6.0-SNAPSHOT.min.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="/app.js"></script>
+    <script src="/js/templates.js"></script>
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,600,400italic,600italic,700italic,900,300italic,300,200italic,200' rel='stylesheet' type='text/css'>
+
+    <!-- Vendor Styles -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/vendor/openwebicons/css/openwebicons-bootstrap.min.css" rel="stylesheet">
+
+    <!-- Application Styles -->
+    <link href="/css/light-site.css" rel="stylesheet">
+
+    <!-- Fav Icon -->
+    <link rel="shortcut icon" href="/images/favicon.png" />
+</head>
+<body>
+
+<!-- Main View -->
+<div id="main-view" class="main-container" ng-view></div>
+
+<!-- ======================================================================================================= -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/1.2.1/lodash.min.js"></script>
+<!-- ======================================================================================================= -->
+</body>
 </html>

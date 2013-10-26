@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                     paths: ['vendor']
                 },
                 files: {
-                    '<%= project.css %>/lightsite.css': ['<%= project.less %>', '<%= project.flatpages_dir %>/**/*.less']
+                    '<%= build.css %>/light-site.css': ['<%= project.less %>', '<%= project.flatpages_dir %>/**/*.less']
                 }
             },
             min: {
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
                     compress: true
                 },
                 files: {
-                    '<%= project.css %>/lightsite.css': ['<%= project.less %>', '<%= project.flatpages_dir %>/**/*.less']
+                    '<%= build.css %>/light-site.css': ['<%= project.less %>', '<%= project.flatpages_dir %>/**/*.less']
                 }
             }
         },
