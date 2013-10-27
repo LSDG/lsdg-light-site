@@ -1,1 +1,18 @@
-<h2>Playlist goes here.</h2>
+<div class="row playlist">
+    <div class="panel-spacer col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-8" ng-include="'/flatpages/partials/playing.html'" ng-init="song = currentSong"></div>
+                    <div class="col-md-4 up-next visible-md visible-lg" ng-include="'/flatpages/partials/playing.html'" ng-init="song = nextSong"></div>
+                    <div class="col-md-8 hidden-md hidden-lg" ng-init="song = nextSong">
+                        <small><strong>Up Next:</strong> {{ song.artist }} - {{ song.title }}</small>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body text-center">
+                <b>No songs queued.</b>
+            </div>
+        </div>
+    </div>
+</div>

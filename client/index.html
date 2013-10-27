@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="lights">
+<html lang="en" data-ng-app="lightsite">
 <head>
     <meta charset="utf-8">
     <title>LSDG Light Control</title>
@@ -14,15 +14,18 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-resource.min.js"></script>
     <script src="/vendor/ui-bootstrap/ui-bootstrap-tpls-0.6.0-SNAPSHOT.min.js"></script>
 
     <!-- Application Scripts -->
     <script src="/app.js"></script>
+    <script src="/controllers.js"></script>
     <script src="/js/templates.js"></script>
 
     <!-- Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,600,400italic,600italic,700italic,900,300italic,300,200italic,200' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Flamenco:300,400|Gudea:400,700,400italic|Mystery+Quest' rel='stylesheet' type='text/css'>
 
     <!-- Vendor Styles -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
@@ -36,8 +39,12 @@
 </head>
 <body>
 
+<header class="text-center">
+    <h1 class="title">LSDG Christmas Lightshow</h1>
+</header>
+
 <!-- Main View -->
-<div id="main-view" class="main-container" ng-view></div>
+<div id="main-view" class="container" ng-view></div>
 
 <!-- ======================================================================================================= -->
 <!-- Placed at the end of the document so the pages load faster -->

@@ -1,0 +1,57 @@
+//----------------------------------------------------------------------------------------------------------------------
+// Playlist styling
+//----------------------------------------------------------------------------------------------------------------------
+
+@import "lesshat/lesshat";
+@import "variables";
+
+//----------------------------------------------------------------------------------------------------------------------
+
+.playlist {
+
+    .cover {
+        width: 64px;
+        border: 1px solid @input-border;
+        border-radius: @input-border-radius;
+        .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+    }
+
+    .panel-heading > * {
+        vertical-align: top;
+    }
+
+    .panel-spacer {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .now-playing {
+        .track-title {
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        .artist {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 5px;
+        }
+    }
+
+    .up-next {
+        .transition(~"opacity .3s ease-in-out");
+
+        opacity: 0.3;
+    }
+
+    .up-next:hover {
+        .transition(~"opacity .3s ease-in-out");
+
+        opacity: 0.8;
+    }
+}
+
+//----------------------------------------------------------------------------------------------------------------------

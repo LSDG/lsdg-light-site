@@ -5,7 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "lodash": "latest",
-    "omega-wf": "latest"
+    "omega-wf": "latest",
+    "apac": "0.0.13"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

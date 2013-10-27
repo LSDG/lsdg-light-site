@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         less: {
             dev: {
                 options: {
-                    paths: ['vendor']
+                    paths: ['client/less', 'vendor']
                 },
                 files: {
                     '<%= build.css %>/light-site.css': ['<%= project.less %>', '<%= project.flatpages_dir %>/**/*.less']
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
             },
             min: {
                 options: {
-                    paths: ['vendor'],
+                    paths: ['client/less', 'vendor'],
                     compress: true
                 },
                 files: {
@@ -57,10 +57,17 @@ module.exports = function(grunt) {
                 file: 'server.js'
             }
         },
-        clean: ["build/index.html"],
+        clean: ["build/index.html", "build/app.js"],
         copy: {
             lightsite: {
                 src: '../<%= project.index %>',
+                expand: true,
+                cwd: 'build',
+                flatten: true,
+                dest: 'build/'
+            },
+            app: {
+                src: '../client/*.js',
                 expand: true,
                 cwd: 'build',
                 flatten: true,
@@ -77,7 +84,7 @@ module.exports = function(grunt) {
                 }
             },
             copy: {
-                files: ['client/index.html'],
+                files: ['client/index.html', 'client/*.js'],
                 tasks: ['clean', 'copy'],
                 options: {
                     atBegin: true

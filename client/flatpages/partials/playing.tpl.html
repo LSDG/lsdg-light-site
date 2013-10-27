@@ -1,0 +1,17 @@
+<div class="media now-playing">
+    <a class="pull-left" href="#">
+        <img class="media-object cover" src="{{ song.image.medium }}" alt="{{ song.title }}">
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading track-title">{{ song.title }}</h4>
+        <div class="pull-right">
+            <small>{{ song.currentTime | prettyTime }}<span ng-if="song.currentTime">/</span>{{ song.duration | prettyTime }}</small>
+        </div>
+        <small class="artist">{{ song.artist }}</small>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ calculateDurationProgress(song.currentTime, song.duration) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ calculateDurationProgress(song.currentTime, song.duration) }}%;">
+                <span class="sr-only">{{ calculateDurationProgress(song.currentTime, song.duration) }} Complete</span>
+            </div>
+        </div>
+    </div>
+</div>
