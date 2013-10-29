@@ -49,35 +49,11 @@ angular.module("/flatpages/playlist.html", []).run(["$templateCache", function($
     "                    <div class=\"col-md-4\">\n" +
     "                        <h4>Available Songs:</h4>\n" +
     "                        <ul class=\"list-group available-songs\">\n" +
-    "                            <li class=\"list-group-item\">\n" +
-    "                                <img src=\"http://ecx.images-amazon.com/images/I/51ZJjk4vPEL._AA160_.jpg\" width=\"32\">\n" +
-    "                                <span class=\"title\">The Night Santa went Crazy</span>\n" +
-    "                                <button class=\"btn btn-default btn-small request\"><i class=\"icon-plus\"></i> Request</button>\n" +
-    "                                <span class=\"clearfix\"></span>\n" +
-    "                            </li>\n" +
-    "                            <li class=\"list-group-item active\">\n" +
-    "                                <img src=\"http://ecx.images-amazon.com/images/I/51s4JEPj15L._AA160_.jpg\" width=\"32\">\n" +
-    "                                <span class=\"title\">Jingle Bell Rock</span>\n" +
-    "                                <div class=\"request playing-text\"><i class=\"icon-play\"></i> Playing</div>\n" +
-    "                                <span class=\"clearfix\"></span>\n" +
-    "                            </li>\n" +
-    "                            <li class=\"list-group-item\">\n" +
-    "                                <img src=\"http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg\" width=\"32\">\n" +
-    "                                <span class=\"title\">Winter Wizard (Instrumental)</span>\n" +
-    "                                <button class=\"btn btn-default btn-small request\"><i class=\"icon-plus\"></i> Request</button>\n" +
-    "                                <span class=\"clearfix\"></span>\n" +
-    "                            </li>\n" +
-    "                            <li class=\"list-group-item\">\n" +
-    "                                <img src=\"http://ecx.images-amazon.com/images/I/51W6mPwureL._AA110_.jpg\" width=\"32\">\n" +
-    "                                <span class=\"title\">White Christmas</span>\n" +
-    "                                <button class=\"btn btn-default btn-small request\"><i class=\"icon-plus\"></i> Request</button>\n" +
-    "                                <span class=\"clearfix\"></span>\n" +
-    "                            </li>\n" +
-    "                            <li class=\"list-group-item\">\n" +
-    "                                <img src=\"http://ecx.images-amazon.com/images/I/51GajV6Vj1L._SL500_AA280_.jpg\" width=\"32\">\n" +
-    "                                <span class=\"title\">Oh Come All Ye Faithful</span>\n" +
-    "                                <button class=\"btn btn-default btn-small request\"><i class=\"icon-plus\"></i> Request</button>\n" +
-    "                                <span class=\"clearfix\"></span>\n" +
+    "                            <li class=\"list-group-item\" ng-repeat=\"song in songList\" ng-class=\"{ active: song.currentTime > 0 }\">\n" +
+    "                                <img class=\"album\" ng-attr-src=\"{{ song.image.small }}\">\n" +
+    "                                <span class=\"title\">{{ song.title }}</span>\n" +
+    "                                <button ng-if=\"!song.currentTime\" class=\"btn btn-default btn-small request\"><i class=\"icon-plus\"></i> Request</button>\n" +
+    "                                <div ng-if=\"song.currentTime\" class=\"request playing-text\"><i class=\"icon-play\"></i> Playing</div>\n" +
     "                            </li>\n" +
     "                        </ul>\n" +
     "                    </div>\n" +

@@ -1060,7 +1060,8 @@ h1.title{font-family:"Mystery Quest","Helvetica Neue",Helvetica,Arial,sans-serif
 .playlist .panel-body .list-group{margin-bottom:0}.playlist .panel-body .list-group .list-group-item{vertical-align:middle;line-height:32px}
 .playlist .panel-body .list-group .playing-text{margin-left:13px}
 .playlist .panel-body .list-group .list-group-item>*{vertical-align:middle}
-.playlist .panel-body .available-songs{text-align:left}.playlist .panel-body .available-songs .list-group-item{line-height:20px}
+.playlist .panel-body .available-songs{text-align:left}.playlist .panel-body .available-songs img.album{width:32px}
+.playlist .panel-body .available-songs .list-group-item{line-height:20px}
 .playlist .panel-body .available-songs .title{display:inline-block;width:calc(100% - 130px)}
 .playlist .panel-body .available-songs .request{display:inline-block}
 .playlist .now-playing .track-title{font-weight:bold;margin-bottom:0}
