@@ -1057,6 +1057,9 @@ h1.title{font-family:"Mystery Quest","Helvetica Neue",Helvetica,Arial,sans-serif
 .playlist .cover{width:64px;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);-moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075)}
 .playlist .panel-heading>*{vertical-align:top}
 .playlist .panel-spacer{padding-left:5px;padding-right:5px}
+.playlist .panel-body .list-group{margin-bottom:0}.playlist .panel-body .list-group .list-group-item{vertical-align:middle;min-height:56px;line-height:36px}
+.playlist .panel-body .list-group .playing-text{margin-right:18px}
+.playlist .panel-body .list-group .list-group-item>*{vertical-align:middle}
 .playlist .now-playing .track-title{font-weight:bold;margin-bottom:0}
 .playlist .now-playing .artist{color:#555;margin-bottom:10px}
 .playlist .now-playing .progress{height:5px}
