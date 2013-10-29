@@ -31,17 +31,33 @@
 
             .list-group-item {
                 vertical-align: middle;
-                min-height: 56px;
-                line-height: 36px;
+                line-height: 32px;
 
             }
 
             .playing-text {
-                margin-right: 18px;
+                margin-left: 13px;
             }
 
             .list-group-item > * {
                 vertical-align: middle;
+            }
+        }
+
+        .available-songs {
+            text-align: left;
+
+            .list-group-item {
+                line-height: 20px;
+            }
+
+            .title {
+                display: inline-block;
+                width: calc(~"100% - 130px");
+            }
+
+            .request {
+                display: inline-block;
             }
         }
     }
