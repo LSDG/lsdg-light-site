@@ -16,11 +16,15 @@ window.app = angular.module("lightsite", [
     {
         $locationProvider.html5Mode(true);
         $routeProvider
-            .when('/', {templateUrl: '/flatpages/playlist.html', controller: 'PlaylistCtrl'})
+            .when('/', {templateUrl: '/flatpages/playlist.html', controller: 'PlaylistCtrl as playlist'})
             .otherwise({redirectTo: '/'});
     }])
     .run(['$rootScope', function($rootScope)
     {
+        //TODO: This is for testing, only! This should default to 0.
+        $rootScope.currentSong = 1;
+
+        $rootScope.requestedSongs = [];
         $rootScope.songList = [
             {
                 title: "The Night Santa Went Crazy",
@@ -77,6 +81,33 @@ window.app = angular.module("lightsite", [
     }]);
 
 //----------------------------------------------------------------------------------------------------------------------
+// Directives
+//----------------------------------------------------------------------------------------------------------------------
+
+window.app.directive("songDisplay", function()
+{
+    return {
+        restrict: "E",
+        templateUrl: "/flatpages/partials/playing.html",
+        scope: {
+            song: "=",
+            isCurrent: "="
+        },
+        controller: function($scope) {
+            $scope.calculateDurationProgress = function(current, duration)
+            {
+                if(current)
+                {
+                    return Math.floor((current / duration) * 100);
+                } // end if
+
+                return 0;
+            }; // end calculateProgress
+        }
+    }
+});
+
+//----------------------------------------------------------------------------------------------------------------------
 // Filters
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -85,7 +116,7 @@ window.app.filter("prettyTime", function()
     return function(time) {
         if(!time)
         {
-            return "";
+            return "0:00";
         } // end if
 
         var minutes = Math.floor(time / 60);

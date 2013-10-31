@@ -3,31 +3,43 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-md-8" ng-include="'/flatpages/partials/playing.html'" ng-init="song = currentSong"></div>
-                    <div class="col-md-4 up-next visible-md visible-lg" ng-include="'/flatpages/partials/playing.html'" ng-init="song = nextSong"></div>
-                    <div class="col-md-8 hidden-md hidden-lg" ng-init="song = nextSong">
-                        <small><strong>Up Next:</strong> {{ song.artist }} - {{ song.title }}</small>
+                    <song-display  class="col-md-8" song="getCurrentSong()" is-current="true"></song-display>
+                    <song-display  class="col-md-4 up-next visible-md visible-lg" song="getNextSong()"></song-display>
+                    <div class="col-md-8 hidden-md hidden-lg">
+                        <small><strong>Up Next:</strong> {{ getNextSong().artist }} - {{ getNextSong().title }}</small>
                     </div>
                 </div>
             </div>
-            <div class="panel-body text-center">
+            <div class="panel-body" ng-controller="RequestQueueCtrl">
                 <div class="row">
                     <div class="col-md-8">
-                        <h4>Request Queue:</h4>
-                        <ul class="list-group">
-                            <li class="list-group-item">
+                        <h4 class="text-center">Request Queue:</h4>
+                        <ul class="list-group requested-songs">
+                            <li ng-if="requestedSongs.length == 0" class="list-group-item text-center">
                                 <b>No songs queued.</b>
+                            </li>
+                            <li class="list-group-item" ng-repeat="song in requestedSongs">
+                                <img class="album" ng-attr-src="{{ song.image.small }}">
+                                <span class="title">{{ song.title }}</span>
+                                <button type="button" class="close" aria-hidden="true" ng-click="removeSong($index)">&times;</button>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-4">
-                        <h4>Available Songs:</h4>
+                        <h4 class="text-center">Available Songs:</h4>
                         <ul class="list-group available-songs">
-                            <li class="list-group-item" ng-repeat="song in songList" ng-class="{ active: song.currentTime > 0 }">
+                            <li class="list-group-item" ng-repeat="song in songList" ng-class="{ active: $index == currentSong }">
                                 <img class="album" ng-attr-src="{{ song.image.small }}">
-                                <span class="title">{{ song.title }}</span>
-                                <button ng-if="!song.currentTime" class="btn btn-default btn-small request"><i class="icon-plus"></i> Request</button>
-                                <div ng-if="song.currentTime" class="request playing-text"><i class="icon-play"></i> Playing</div>
+                                <span class="title" ng-class="{ requested: isInQueue(song) }">{{ song.title }}</span>
+                                <button ng-if="$index != currentSong"
+                                        class="btn btn-default btn-small request"
+                                        ng-click="queueSong($index)"
+                                        ng-class="{ disabled: isInQueue(song) }">
+                                    <i class="icon-plus"></i>
+                                    <span ng-if="!isInQueue(song)">Request</span>
+                                    <span ng-if="isInQueue(song)">Requested</span>
+                                </button>
+                                <div ng-if="$index == currentSong" class="request playing-text"><i class="icon-play"></i> Playing</div>
                             </li>
                         </ul>
                     </div>

@@ -10,42 +10,62 @@ module = angular.module("lightsite.controllers", []);
 
 module.controller("PlaylistCtrl", ["$scope", function($scope)
 {
-    $scope.currentSong = {
-        title: "Jingle Bell Rock",
-        artist: "Bobby Helms",
-        currentTime: 98,
-        duration: 120,
-        image: {
-            small: 'http://ecx.images-amazon.com/images/I/51s4JEPj15L._AA160_.jpg',
-            medium: 'http://ecx.images-amazon.com/images/I/51s4JEPj15L._AA160_.jpg',
-            large: 'http://ecx.images-amazon.com/images/I/51s4JEPj15L._AA160_.jpg'
-        }
-    };
-
-    $scope.nextSong = {
-        title: "Winter Wizard (Instrumental)",
-        artist: "Trans-Siberian Orchestra",
-        duration: 185,
-        image: {
-            small: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg',
-            medium: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg',
-            large: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg'
-        }
-    };
-
     //------------------------------------------------------------------------------------------------------------------
     // Functions
     //------------------------------------------------------------------------------------------------------------------
 
-    $scope.calculateDurationProgress = function(current, duration)
+    $scope.getCurrentSong = function()
     {
-        if(current)
+        return $scope.songList[$scope.currentSong];
+    }; // end getCurrentSong
+
+    $scope.getNextSong = function()
+    {
+        if ($scope.requestedSongs.length > 0)
         {
-            return Math.floor((current / duration) * 100);
+            return $scope.requestedSongs[0];
         } // end if
 
-        return 0;
-    }; // end calculateProgress
+        var nextSongIdx = $scope.currentSong + 1;
+        return $scope.songList[nextSongIdx];
+    }; // end getNextSong
+
+}]);
+
+//----------------------------------------------------------------------------------------------------------------------
+
+module.controller("RequestQueueCtrl", ["$scope", function($scope)
+{
+    //------------------------------------------------------------------------------------------------------------------
+    // Functions
+    //------------------------------------------------------------------------------------------------------------------
+
+    $scope.queueSong = function(songIdx)
+    {
+        var song = $scope.songList[songIdx];
+        $scope.requestedSongs.push(song);
+
+    }; // end queueSong
+
+    $scope.removeSong = function(songIdx)
+    {
+        $scope.requestedSongs.splice(songIdx, 1);
+    }; // end removeSong
+
+    $scope.isInQueue = function(song)
+    {
+        for(var idx = 0; idx < $scope.requestedSongs.length; idx++)
+        {
+            var listSong = $scope.requestedSongs[idx];
+            if(song.title == $scope.requestedSongs[idx].title && song.artist == $scope.requestedSongs[idx].artist)
+            {
+                return true;
+            } // end if
+        } // end for
+
+        return false;
+    }; // end isInQueue
+
 }]);
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -1063,7 +1063,10 @@ h1.title{font-family:"Mystery Quest","Helvetica Neue",Helvetica,Arial,sans-serif
 .playlist .panel-body .available-songs{text-align:left}.playlist .panel-body .available-songs img.album{width:32px}
 .playlist .panel-body .available-songs .list-group-item{line-height:20px}
 .playlist .panel-body .available-songs .title{display:inline-block;width:calc(100% - 130px)}
+.playlist .panel-body .available-songs .title.requested{width:calc(100% - 145px)}
 .playlist .panel-body .available-songs .request{display:inline-block}
+.playlist .panel-body .requested-songs{text-align:left}.playlist .panel-body .requested-songs img.album{width:32px}
+.playlist .panel-body .requested-songs .list-group-item{line-height:32px}
 .playlist .now-playing .track-title{font-weight:bold;margin-bottom:0}
 .playlist .now-playing .artist{color:#555;margin-bottom:10px}
 .playlist .now-playing .progress{height:5px}
