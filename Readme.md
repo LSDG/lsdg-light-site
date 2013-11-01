@@ -155,6 +155,6 @@ Tells the rPi to stop playing immediately.
 
 This is just a simple confirmation message that lets the website know once the rPi has finally stopped.
 
-### The `songctl` namespace
+### The `songctrl` namespace
 
 API TBD.
