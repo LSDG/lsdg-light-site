@@ -6,7 +6,9 @@
   "dependencies": {
     "lodash": "latest",
     "omega-wf": "latest",
-    "apac": "0.0.13"
+    "apac": "0.0.13",
+    "socket.io-client": "~0.9.16",
+    "omega-logger": "~0.5.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

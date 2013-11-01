@@ -8,6 +8,9 @@ var path = require('path');
 var app = require('omega-wf').app;
 var views = require('./server/views');
 
+// Communication Modules
+require('./server/rpi_comm');
+
 // ---------------------------------------------------------------------------------------------------------------------
 
 app.router.add(
