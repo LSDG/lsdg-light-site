@@ -25,7 +25,63 @@ window.app = angular.module("lightsite", [
         $rootScope.requestedSongs = [];
         $rootScope.songList = [];
 
-        $rootScope.socket = io.connect("http://localhost:8080/songctrl");
+        //--------------------------------------------------------------------------------------------------------------
+        // State Control
+        //--------------------------------------------------------------------------------------------------------------
+
+        function getSongByFilename(filename)
+        {
+            for(var idx = 0; idx < songList.length; idx++)
+            {
+                var song = songList[idx];
+                if(song.filename == filename)
+                {
+                    return song;
+                } // end if
+            } // end for
+
+            return undefined;
+        } // end getSongByFilename
+
+        function getSongIndex(song)
+        {
+            for(var idx = 0; idx < $rootScope.songList.length; idx++ )
+            {
+                var songIdx = $rootScope.songList[idx];
+                if(songIdx.filename == song.filename)
+                {
+                    return idx;
+                } // end if
+            } // end for
+        } // end getSongByIndex
+
+        $rootScope.getCurrentSong = function()
+        {
+            return $rootScope.songList[$rootScope.currentSong];
+        }; // end getCurrentSong
+
+        $rootScope.getNextSong = function()
+        {
+            if ($rootScope.requestedSongs.length > 0)
+            {
+                return $rootScope.requestedSongs[0];
+            } // end if
+
+            var nextSongIdx = $rootScope.currentSong + 1;
+            return $rootScope.songList[nextSongIdx];
+        }; // end getNextSong
+
+        $rootScope.getNextSongByIdx = function()
+        {
+            return getSongIndex($rootScope.getNextSong());
+        }; // end getNextSong
+
+
+        //--------------------------------------------------------------------------------------------------------------
+        // Socket.io communication
+        //--------------------------------------------------------------------------------------------------------------
+
+        $rootScope.socket = io.connect("/songctrl");
 
         $rootScope.socket.on('error', function(error)
         {
@@ -43,6 +99,24 @@ window.app = angular.module("lightsite", [
         {
             $rootScope.$apply(function(){
                 $rootScope.requestedSongs = data.songs;
+            });
+        });
+
+        $rootScope.socket.on('song finished', function(data)
+        {
+            console.log('Song finished!');
+
+            $rootScope.$apply(function(){
+                var next = $rootScope.getNextSongByIdx();
+                if(next !== undefined)
+                {
+                    $rootScope.currentSong = next;
+                }
+                else
+                {
+                    //TODO: figure out some sane behavior for this state.
+                    console.log('I have no clue what to do here.')
+                } // end if
             });
         });
 
