@@ -43,13 +43,13 @@ module.controller("RequestQueueCtrl", ["$scope", function($scope)
     $scope.queueSong = function(songIdx)
     {
         var song = $scope.songList[songIdx];
-        $scope.requestedSongs.push(song);
+        $scope.socket.emit('request song', { song: song.filename });
 
     }; // end queueSong
 
     $scope.removeSong = function(songIdx)
     {
-        $scope.requestedSongs.splice(songIdx, 1);
+        $scope.socket.emit('remove request', { song: songIdx });
     }; // end removeSong
 
     $scope.isInQueue = function(song)

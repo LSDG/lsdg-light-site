@@ -21,63 +21,55 @@ window.app = angular.module("lightsite", [
     }])
     .run(['$rootScope', function($rootScope)
     {
-        //TODO: This is for testing, only! This should default to 0.
-        $rootScope.currentSong = 1;
-
+        $rootScope.currentSong = 0;
         $rootScope.requestedSongs = [];
-        $rootScope.songList = [
+        $rootScope.songList = [];
+
+        $rootScope.socket = io.connect("http://localhost:8080/songctrl");
+
+        $rootScope.socket.on('error', function(error)
+        {
+            console.log('Socket Error:', error);
+        });
+
+        $rootScope.socket.on('song list', function(data)
+        {
+            $rootScope.$apply(function(){
+                $rootScope.songList = data.songs;
+            });
+        });
+
+        $rootScope.socket.on('requests', function(data)
+        {
+            $rootScope.$apply(function(){
+                $rootScope.requestedSongs = data.songs;
+            });
+        });
+
+        // When we connect, we need to figure out what the current status is, and update ourselves correctly.
+        $rootScope.socket.on('connect', function()
+        {
+            $rootScope.socket.emit('list songs', function(data)
             {
-                title: "The Night Santa Went Crazy",
-                artist: "\"Weird Al\" Yankovic",
-                duration: 243,
-                image: {
-                    small: 'http://ecx.images-amazon.com/images/I/51ZJjk4vPEL._AA160_.jpg',
-                    medium: 'http://ecx.images-amazon.com/images/I/51ZJjk4vPEL._AA160_.jpg',
-                    large: 'http://ecx.images-amazon.com/images/I/51ZJjk4vPEL._AA160_.jpg'
-                }
-            },
+                $rootScope.$apply(function(){
+                    $rootScope.songList = data.songs;
+                });
+
+                $rootScope.socket.emit('get status', function(data) {
+                    $rootScope.$apply(function()
+                    {
+                        //TODO: Do something with this information!
+                    });
+                });
+            });
+
+            $rootScope.socket.emit('list requested songs', function(data)
             {
-                title: "Jingle Bell Rock",
-                artist: "Bobby Helms",
-                currentTime: 98,
-                duration: 120,
-                image: {
-                    small: 'http://ecx.images-amazon.com/images/I/51s4JEPj15L._AA160_.jpg',
-                    medium: 'http://ecx.images-amazon.com/images/I/51s4JEPj15L._AA160_.jpg',
-                    large: 'http://ecx.images-amazon.com/images/I/51s4JEPj15L._AA160_.jpg'
-                }
-            },
-            {
-                title: "Winter Wizard (Instrumental)",
-                artist: "Trans-Siberian Orchestra",
-                duration: 185,
-                image: {
-                    small: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg',
-                    medium: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg',
-                    large: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg'
-                }
-            },
-            {
-                title: "White Christmas",
-                artist: "Bing Crosby",
-                duration: 183,
-                image: {
-                    small: 'http://ecx.images-amazon.com/images/I/51W6mPwureL._AA110_.jpg',
-                    medium: 'http://ecx.images-amazon.com/images/I/51W6mPwureL._AA110_.jpg',
-                    large: 'http://ecx.images-amazon.com/images/I/51W6mPwureL._AA110_.jpg'
-                }
-            },
-            {
-                title: "Oh Come All Ye Faithful",
-                artist: "Jeremy Camp",
-                duration: 198,
-                image: {
-                    small: 'http://ecx.images-amazon.com/images/I/51GajV6Vj1L._SL500_AA280_.jpg',
-                    medium: 'http://ecx.images-amazon.com/images/I/51GajV6Vj1L._SL500_AA280_.jpg',
-                    large: 'http://ecx.images-amazon.com/images/I/51GajV6Vj1L._SL500_AA280_.jpg'
-                }
-            }
-        ];
+                $rootScope.$apply(function(){
+                    $rootScope.requestedSongs = data.songs;
+                });
+            });
+        });
     }]);
 
 //----------------------------------------------------------------------------------------------------------------------

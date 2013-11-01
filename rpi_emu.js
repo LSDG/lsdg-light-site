@@ -90,6 +90,12 @@ function getSongByFilename(filename)
 
 function playSong(song)
 {
+    if(!song)
+    {
+        logger.critical('playSong called without a song!');
+        return;
+    } // end if
+
     playing = song;
 
     // Call the now playing callback

@@ -82,7 +82,7 @@ format specified in the response.
 
 ```javascript
 {
-    playlist: [
+    songs: [
         {
             title: "Winter Wizard (Instrumental)",
             artist: "Trans-Siberian Orchestra",

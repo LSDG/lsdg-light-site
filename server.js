@@ -9,7 +9,7 @@ var app = require('omega-wf').app;
 var views = require('./server/views');
 
 // Communication Modules
-require('./server/rpi_comm');
+require('./server/comm');
 
 // ---------------------------------------------------------------------------------------------------------------------
 
