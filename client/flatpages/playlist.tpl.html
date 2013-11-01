@@ -1,5 +1,5 @@
 <div class="row playlist">
-    <div class="panel-spacer col-xs-12">
+    <div ng-if="songList.length > 0" class="panel-spacer col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
@@ -46,5 +46,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div ng-if="songList <= 0" class="col-lg-12 text-center">
+        <h3>No songs available. (The lightshow currently isn't running.)</h3>
     </div>
 </div>

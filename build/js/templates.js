@@ -16,8 +16,8 @@ angular.module("/flatpages/partials/playing.html", []).run(["$templateCache", fu
     "        </div>\n" +
     "        <small class=\"artist\">{{ song.artist }}</small>\n" +
     "        <div class=\"progress\" ng-if=\"isCurrent\">\n" +
-    "            <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"{{ calculateDurationProgress(song.currentTime, song.duration) }}\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ calculateDurationProgress(song.currentTime, song.duration) }}%;\">\n" +
-    "                <span class=\"sr-only\">{{ calculateDurationProgress(song.currentTime, song.duration) }} Complete</span>\n" +
+    "            <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"{{ calculateDurationProgress(currentPos, song.duration) }}\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ calculateDurationProgress(song.currentTime, song.duration) }}%;\">\n" +
+    "                <span class=\"sr-only\">{{ calculateDurationProgress(currentPos, song.duration) }} Complete</span>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -28,7 +28,7 @@ angular.module("/flatpages/partials/playing.html", []).run(["$templateCache", fu
 angular.module("/flatpages/playlist.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("/flatpages/playlist.html",
     "<div class=\"row playlist\">\n" +
-    "    <div class=\"panel-spacer col-xs-12\">\n" +
+    "    <div ng-if=\"songList.length > 0\" class=\"panel-spacer col-xs-12\">\n" +
     "        <div class=\"panel panel-default\">\n" +
     "            <div class=\"panel-heading\">\n" +
     "                <div class=\"row\">\n" +
@@ -75,6 +75,9 @@ angular.module("/flatpages/playlist.html", []).run(["$templateCache", function($
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"songList <= 0\" class=\"col-lg-12 text-center\">\n" +
+    "        <h3>No songs available. (The lightshow currently isn't running.)</h3>\n" +
     "    </div>\n" +
     "</div>\n" +
     "");

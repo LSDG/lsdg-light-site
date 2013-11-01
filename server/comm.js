@@ -12,6 +12,7 @@ var logger = require('omega-wf').logging.getLogger('comm');
 var currentSong = -1;
 var requestedSongs = [];
 var songList = [];
+var currentPos = 0;
 
 var rpiSocket = undefined;
 var clientChannel = app.channel('/songctrl');
@@ -33,6 +34,18 @@ function getSongByFilename(filename)
 
     return undefined;
 } // end getSongByFilename
+
+function getSongIndex(song)
+{
+    for(var idx = 0; idx < songList.length; idx++ )
+    {
+        var songIdx = songList[idx];
+        if(songIdx.filename == song.filename)
+        {
+            return idx;
+        } // end if
+    } // end for
+} // end getSongByIndex
 
 //----------------------------------------------------------------------------------------------------------------------
 // State Handling
@@ -65,8 +78,13 @@ function playNext()
 {
     var nextSong = getNextSong();
 
-    rpiSocket.emit('play next', { song: nextSong.filename }, function()
+    console.log('play next!');
+    rpiSocket.emit('play next', { song: nextSong.filename }, function(data)
     {
+        console.log('play next 2!');
+
+        currentSong = getSongIndex(nextSong);
+        simulateSong(nextSong);
         clientChannel.emit('now playing', { song: nextSong.filename });
     });
 } // end playNext
@@ -81,6 +99,18 @@ function removeRequest(idx)
     requestedSongs.splice(idx, 1);
     clientChannel.emit('requests', { songs: requestedSongs });
 } // end removeRequest
+
+function simulateSong(song)
+{
+    setTimeout(function()
+    {
+        currentPos++;
+        if(currentPos < song.duration)
+        {
+            simulateSong(song);
+        } // end if
+    }, 1000);
+} // end simulateSong
 
 //----------------------------------------------------------------------------------------------------------------------
 // Raspberry Pi Communication
@@ -113,6 +143,10 @@ app.channel('/rpi').on('connection', function (socket)
             logger.warn('[\'song finished\': No song specified.')
         } // end if
 
+        // Reset our current position in the playing song
+        currentPos = 0;
+
+        // Tell our clients that we've finished playing the song
         clientChannel.emit('song finished', { song: data.song });
 
         // Play the next song!
@@ -152,7 +186,10 @@ clientChannel.on('connection', function (socket)
 
     socket.on('get status', function(cb)
     {
-        cb({ playing: getCurrentSong() || "none" });
+        cb({
+            playing: getCurrentSong().filename || "none",
+            position: currentPos
+        });
     });
 
     socket.on('list songs', function(cb)

@@ -12,8 +12,8 @@
         </div>
         <small class="artist">{{ song.artist }}</small>
         <div class="progress" ng-if="isCurrent">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{ calculateDurationProgress(song.currentTime, song.duration) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ calculateDurationProgress(song.currentTime, song.duration) }}%;">
-                <span class="sr-only">{{ calculateDurationProgress(song.currentTime, song.duration) }} Complete</span>
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ calculateDurationProgress(currentPos, song.duration) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ calculateDurationProgress(song.currentTime, song.duration) }}%;">
+                <span class="sr-only">{{ calculateDurationProgress(currentPos, song.duration) }} Complete</span>
             </div>
         </div>
     </div>

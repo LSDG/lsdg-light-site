@@ -22,6 +22,7 @@ window.app = angular.module("lightsite", [
     .run(['$rootScope', function($rootScope)
     {
         $rootScope.currentSong = 0;
+        $rootScope.currentPos = 0;
         $rootScope.requestedSongs = [];
         $rootScope.songList = [];
 
@@ -31,9 +32,9 @@ window.app = angular.module("lightsite", [
 
         function getSongByFilename(filename)
         {
-            for(var idx = 0; idx < songList.length; idx++)
+            for(var idx = 0; idx < $rootScope.songList.length; idx++)
             {
-                var song = songList[idx];
+                var song = $rootScope.songList[idx];
                 if(song.filename == filename)
                 {
                     return song;
@@ -45,14 +46,21 @@ window.app = angular.module("lightsite", [
 
         function getSongIndex(song)
         {
-            for(var idx = 0; idx < $rootScope.songList.length; idx++ )
+            if(song)
             {
-                var songIdx = $rootScope.songList[idx];
-                if(songIdx.filename == song.filename)
+                for(var idx = 0; idx < $rootScope.songList.length; idx++ )
                 {
-                    return idx;
-                } // end if
-            } // end for
+                    var songIdx = $rootScope.songList[idx];
+                    if(songIdx.filename == song.filename)
+                    {
+                        return idx;
+                    } // end if
+                } // end for
+            }
+            else
+            {
+                console.error("Tried to get index of song, but failed to pass in song!");
+            } // end if
         } // end getSongByIndex
 
         $rootScope.getCurrentSong = function()
@@ -132,7 +140,17 @@ window.app = angular.module("lightsite", [
                 $rootScope.socket.emit('get status', function(data) {
                     $rootScope.$apply(function()
                     {
-                        //TODO: Do something with this information!
+                        console.log('status:', data);
+                        if(data.playing != "none")
+                        {
+                            $rootScope.currentSong = getSongIndex(getSongByFilename(data.playing));
+                            $rootScope.currentPos = data.position;
+                        }
+                        else
+                        {
+                            $rootScope.currentSong = -1;
+                            $rootScope.currentPos = 0;
+                        } // end if
                     });
                 });
             });
@@ -157,7 +175,8 @@ window.app.directive("songDisplay", function()
         templateUrl: "/flatpages/partials/playing.html",
         scope: {
             song: "=",
-            isCurrent: "="
+            isCurrent: "=",
+            currentPos: "="
         },
         controller: function($scope) {
             $scope.calculateDurationProgress = function(current, duration)
