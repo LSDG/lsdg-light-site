@@ -17,7 +17,7 @@ var songList = [
     {
         title: "The Night Santa Went Crazy",
         artist: "\"Weird Al\" Yankovic",
-        duration: 24,
+        duration: 243,
         image: {
             small: 'http://ecx.images-amazon.com/images/I/51ZJjk4vPEL._AA160_.jpg',
             medium: 'http://ecx.images-amazon.com/images/I/51ZJjk4vPEL._AA160_.jpg',
@@ -28,7 +28,7 @@ var songList = [
     {
         title: "Jingle Bell Rock",
         artist: "Bobby Helms",
-        duration: 12,
+        duration: 120,
         image: {
             small: 'http://ecx.images-amazon.com/images/I/51s4JEPj15L._AA160_.jpg',
             medium: 'http://ecx.images-amazon.com/images/I/51s4JEPj15L._AA160_.jpg',
@@ -39,7 +39,7 @@ var songList = [
     {
         title: "Winter Wizard (Instrumental)",
         artist: "Trans-Siberian Orchestra",
-        duration: 18,
+        duration: 180,
         image: {
             small: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg',
             medium: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg',
@@ -50,7 +50,7 @@ var songList = [
     {
         title: "White Christmas",
         artist: "Bing Crosby",
-        duration: 18,
+        duration: 180,
         image: {
             small: 'http://ecx.images-amazon.com/images/I/51W6mPwureL._AA110_.jpg',
             medium: 'http://ecx.images-amazon.com/images/I/51W6mPwureL._AA110_.jpg',
@@ -61,7 +61,7 @@ var songList = [
     {
         title: "Oh Come All Ye Faithful",
         artist: "Jeremy Camp",
-        duration: 19,
+        duration: 196,
         image: {
             small: 'http://ecx.images-amazon.com/images/I/51GajV6Vj1L._SL500_AA280_.jpg',
             medium: 'http://ecx.images-amazon.com/images/I/51GajV6Vj1L._SL500_AA280_.jpg',
@@ -154,8 +154,6 @@ rpi.on('list songs', function(cb)
 
 rpi.on('play next', function(data, cb)
 {
-    console.log('play next!');
-
     if(!data.song)
     {
         logger.warn('Missing \'song\' parameter. Ignoring.')

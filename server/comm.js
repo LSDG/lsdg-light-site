@@ -67,10 +67,19 @@ function getNextSong()
 {
     if (requestedSongs.length > 0)
     {
-        return requestedSongs[0];
+        var song = requestedSongs[0];
+        removeRequest(0);
+        return song;
     } // end if
 
     var nextSongIdx = currentSong + 1;
+
+    // If we've gone off the end of the list, we need to loop around.
+    if(nextSongIdx >= songList.length)
+    {
+        nextSongIdx = 0;
+    } // end if
+
     return songList[nextSongIdx];
 } // end getNextSong
 
@@ -78,11 +87,8 @@ function playNext()
 {
     var nextSong = getNextSong();
 
-    console.log('play next!');
     rpiSocket.emit('play next', { song: nextSong.filename }, function(data)
     {
-        console.log('play next 2!');
-
         currentSong = getSongIndex(nextSong);
         simulateSong(nextSong);
         clientChannel.emit('now playing', { song: nextSong.filename });
@@ -105,6 +111,7 @@ function simulateSong(song)
     setTimeout(function()
     {
         currentPos++;
+        clientChannel.emit('status', { playing: getCurrentSong().filename || "none", position: currentPos });
         if(currentPos < song.duration)
         {
             simulateSong(song);

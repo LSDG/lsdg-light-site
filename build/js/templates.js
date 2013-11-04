@@ -10,13 +10,13 @@ angular.module("/flatpages/partials/playing.html", []).run(["$templateCache", fu
     "        <h4 class=\"media-heading track-title\">{{ song.title }}</h4>\n" +
     "        <div class=\"pull-right\">\n" +
     "            <small>\n" +
-    "                <span ng-if=\"isCurrent\">{{ song.currentTime | prettyTime }} /</span>\n" +
+    "                <span ng-if=\"isCurrent\">{{ currentPos | prettyTime }} /</span>\n" +
     "                {{ song.duration | prettyTime }}\n" +
     "            </small>\n" +
     "        </div>\n" +
     "        <small class=\"artist\">{{ song.artist }}</small>\n" +
     "        <div class=\"progress\" ng-if=\"isCurrent\">\n" +
-    "            <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"{{ calculateDurationProgress(currentPos, song.duration) }}\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ calculateDurationProgress(song.currentTime, song.duration) }}%;\">\n" +
+    "            <div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"{{ calculateDurationProgress(currentPos, song.duration) }}\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: {{ calculateDurationProgress(currentPos, song.duration) }}%;\">\n" +
     "                <span class=\"sr-only\">{{ calculateDurationProgress(currentPos, song.duration) }} Complete</span>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -32,7 +32,7 @@ angular.module("/flatpages/playlist.html", []).run(["$templateCache", function($
     "        <div class=\"panel panel-default\">\n" +
     "            <div class=\"panel-heading\">\n" +
     "                <div class=\"row\">\n" +
-    "                    <song-display  class=\"col-md-8\" song=\"getCurrentSong()\" is-current=\"true\"></song-display>\n" +
+    "                    <song-display  class=\"col-md-8\" song=\"getCurrentSong()\" is-current=\"true\" current-pos=\"currentPos\"></song-display>\n" +
     "                    <song-display  class=\"col-md-4 up-next visible-md visible-lg\" song=\"getNextSong()\"></song-display>\n" +
     "                    <div class=\"col-md-8 hidden-md hidden-lg\">\n" +
     "                        <small><strong>Up Next:</strong> {{ getNextSong().artist }} - {{ getNextSong().title }}</small>\n" +

@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                    <song-display  class="col-md-8" song="getCurrentSong()" is-current="true"></song-display>
+                    <song-display  class="col-md-8" song="getCurrentSong()" is-current="true" current-pos="currentPos"></song-display>
                     <song-display  class="col-md-4 up-next visible-md visible-lg" song="getNextSong()"></song-display>
                     <div class="col-md-8 hidden-md hidden-lg">
                         <small><strong>Up Next:</strong> {{ getNextSong().artist }} - {{ getNextSong().title }}</small>

@@ -6,13 +6,13 @@
         <h4 class="media-heading track-title">{{ song.title }}</h4>
         <div class="pull-right">
             <small>
-                <span ng-if="isCurrent">{{ song.currentTime | prettyTime }} /</span>
+                <span ng-if="isCurrent">{{ currentPos | prettyTime }} /</span>
                 {{ song.duration | prettyTime }}
             </small>
         </div>
         <small class="artist">{{ song.artist }}</small>
         <div class="progress" ng-if="isCurrent">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{ calculateDurationProgress(currentPos, song.duration) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ calculateDurationProgress(song.currentTime, song.duration) }}%;">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ calculateDurationProgress(currentPos, song.duration) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ calculateDurationProgress(currentPos, song.duration) }}%;">
                 <span class="sr-only">{{ calculateDurationProgress(currentPos, song.duration) }} Complete</span>
             </div>
         </div>

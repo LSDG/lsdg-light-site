@@ -76,6 +76,13 @@ window.app = angular.module("lightsite", [
             } // end if
 
             var nextSongIdx = $rootScope.currentSong + 1;
+
+            // If we've gone off the end of the list, we need to loop around.
+            if(nextSongIdx >= $rootScope.songList.length)
+            {
+                nextSongIdx = 0;
+            } // end if
+
             return $rootScope.songList[nextSongIdx];
         }; // end getNextSong
 
@@ -112,8 +119,6 @@ window.app = angular.module("lightsite", [
 
         $rootScope.socket.on('song finished', function(data)
         {
-            console.log('Song finished!');
-
             $rootScope.$apply(function(){
                 var next = $rootScope.getNextSongByIdx();
                 if(next !== undefined)
@@ -124,6 +129,22 @@ window.app = angular.module("lightsite", [
                 {
                     //TODO: figure out some sane behavior for this state.
                     console.log('I have no clue what to do here.')
+                } // end if
+            });
+        });
+
+        $rootScope.socket.on('status', function(data)
+        {
+            $rootScope.$apply(function(){
+                if(data.playing != "none")
+                {
+                    $rootScope.currentSong = getSongIndex(getSongByFilename(data.playing));
+                    $rootScope.currentPos = data.position;
+                }
+                else
+                {
+                    $rootScope.currentSong = -1;
+                    $rootScope.currentPos = 0;
                 } // end if
             });
         });
@@ -140,7 +161,6 @@ window.app = angular.module("lightsite", [
                 $rootScope.socket.emit('get status', function(data) {
                     $rootScope.$apply(function()
                     {
-                        console.log('status:', data);
                         if(data.playing != "none")
                         {
                             $rootScope.currentSong = getSongIndex(getSongByFilename(data.playing));
