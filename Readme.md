@@ -12,7 +12,7 @@ a phone screen, since it's more likely that people will be using phones to contr
 * Look up Album art when getting the song list.
 * Check song simulation; it appears to always keep simulating the song, leading to ever-increasing speeds.
 * Base ability to delete songs off local cookie.
-* Fix bug where the client attempts to get the current status, but there's no song list, so the server blows up.
+* ~~Fix bug where the client attempts to get the current status, but there's no song list, so the server blows up.~~
 * Needs to remember previous position and return to it once it empties the queue.
 * Add RSA-based challenge for rPi authentication.
 * Add slide transition when song changes.

@@ -111,7 +111,8 @@ function simulateSong(song)
     setTimeout(function()
     {
         currentPos++;
-        clientChannel.emit('status', { playing: getCurrentSong().filename || "none", position: currentPos });
+        clientChannel.emit('status', { playing: (getCurrentSong() || {}).filename || "none", position: currentPos });
+
         if(currentPos < song.duration)
         {
             simulateSong(song);
@@ -194,7 +195,7 @@ clientChannel.on('connection', function (socket)
     socket.on('get status', function(cb)
     {
         cb({
-            playing: getCurrentSong().filename || "none",
+            playing: (getCurrentSong() || {}).filename || "none",
             position: currentPos
         });
     });
