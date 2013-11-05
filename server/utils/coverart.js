@@ -18,28 +18,46 @@ var opHelper = new OperationHelper({
 function queryAWSForCoverArt(query, callback)
 {
     opHelper.execute('ItemSearch', {
-        'SearchIndex': 'DigitalMusic',
+        'SearchIndex': 'All',
         'Keywords': query,
         'ResponseGroup': 'Images'
     }, function(results)
     {
-        //TODO: This needs to be made more robust!
         if(results.ItemSearchResponse.Items.length > 0)
         {
-            callback({
-                small: results.ItemSearchResponse.Items[0].Item[0].SmallImage[0].URL[0],
-                medium: results.ItemSearchResponse.Items[0].Item[0].MediumImage[0].URL[0],
-                large: results.ItemSearchResponse.Items[0].Item[0].LargeImage[0].URL[0]
-            });
-        } // end if
+            var item = results.ItemSearchResponse.Items[0];
+            var results = undefined;
 
-        callback('');
+            if(parseInt(item.TotalResults) > 0)
+            {
+                results = {
+                    small: item.Item[0].SmallImage[0].URL[0],
+                    medium: item.Item[0].MediumImage[0].URL[0],
+                    large: item.Item[0].LargeImage[0].URL[0]
+                };
+
+                callback(results);
+            }
+            else
+            {
+                console.error('Failed to find albumn art for:', query);
+                callback({
+                    small: "http://s.pixogs.com/images/record150.png",
+                    medium: "http://s.pixogs.com/images/record150.png",
+                    large: "http://s.pixogs.com/images/record150.png"
+                });
+            } // end if
+        }
+        else
+        {
+            callback();
+        } // end if
     });
 } // end queryAWSForCoverArt
 
-function getCoverArt(artist, album, callback)
+function getCoverArt(artist, title, callback)
 {
-    queryAWSForCoverArt(artist + " - " + album, callback);
+    queryAWSForCoverArt(artist + " - " + title, callback);
 } // end get CoverArt
 
 module.exports = {
