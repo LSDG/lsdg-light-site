@@ -13,6 +13,7 @@ var currentSong = -1;
 var requestedSongs = [];
 var songList = [];
 var currentPos = 0;
+var simulateTimer = null;
 
 var rpiSocket = undefined;
 var clientChannel = app.channel('/songctrl');
@@ -83,6 +84,24 @@ function getNextSong()
     return songList[nextSongIdx];
 } // end getNextSong
 
+function addRequest(filename) {
+    requestedSongs.push(getSongByFilename(filename));
+    clientChannel.emit('requests', { songs: requestedSongs });
+} // end addRequest
+
+function removeRequest(idx)
+{
+    requestedSongs.splice(idx, 1);
+    clientChannel.emit('requests', { songs: requestedSongs });
+} // end removeRequest
+
+function stop()
+{
+    console.log('stopping!');
+    currentPos = 0;
+    clearInterval(simulateTimer);
+} // end if
+
 function playNext()
 {
     var nextSong = getNextSong();
@@ -95,27 +114,23 @@ function playNext()
     });
 } // end playNext
 
-function addRequest(filename) {
-    requestedSongs.push(getSongByFilename(filename));
-    clientChannel.emit('requests', { songs: requestedSongs });
-} // end addRequest
-
-function removeRequest(idx)
-{
-    requestedSongs.splice(idx, 1);
-    clientChannel.emit('requests', { songs: requestedSongs });
-} // end removeRequest
-
 function simulateSong(song)
 {
-    setTimeout(function()
+    if(simulateTimer)
     {
+        // If we have a current simulation running, we need to stop it before we begin this one.
+        stop();
+    } // end if
+
+    simulateTimer = setInterval(function()
+    {
+        console.log('sup, bros?', currentPos, song.duration);
         currentPos++;
         clientChannel.emit('status', { playing: (getCurrentSong() || {}).filename || "none", position: currentPos });
 
-        if(currentPos < song.duration)
+        if(currentPos >= song.duration)
         {
-            simulateSong(song);
+            stop();
         } // end if
     }, 1000);
 } // end simulateSong
@@ -140,7 +155,11 @@ app.channel('/rpi').on('connection', function (socket)
 
     socket.on('disconnect', function()
     {
+        stop();
+
         rpiSocket = undefined;
+        clientChannel.emit('rPi disconnected');
+
         logger.info('rPi disconnected.');
     });
 
@@ -166,6 +185,7 @@ app.channel('/rpi').on('connection', function (socket)
     //------------------------------------------------------------------------------------------------------------------
 
     logger.info('rPi connected.');
+    clientChannel.emit('rPi connected');
 
     // Store our socket connection to the rPi.
     rpiSocket = socket;
@@ -177,7 +197,7 @@ app.channel('/rpi').on('connection', function (socket)
         songList = songs;
 
         // Broadcast the song list to all clients
-        clientChannel.emit('song list', songList);
+        clientChannel.emit('song list', { songs: songList });
 
         // Start playing the playlist
         playNext();

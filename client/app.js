@@ -135,7 +135,9 @@ window.app = angular.module("lightsite", [
 
         $rootScope.socket.on('status', function(data)
         {
-            $rootScope.$apply(function(){
+            console.log('status sent!');
+            $rootScope.$apply(function()
+            {
                 if(data.playing != "none")
                 {
                     $rootScope.currentSong = getSongIndex(getSongByFilename(data.playing));
@@ -149,8 +151,10 @@ window.app = angular.module("lightsite", [
             });
         });
 
-        // When we connect, we need to figure out what the current status is, and update ourselves correctly.
-        $rootScope.socket.on('connect', function()
+        //--------------------------------------------------------------------------------------------------------------
+
+        // Get the initial state for the page.
+        function getInitialState()
         {
             $rootScope.socket.emit('list songs', function(data)
             {
@@ -181,6 +185,29 @@ window.app = angular.module("lightsite", [
                     $rootScope.requestedSongs = data.songs;
                 });
             });
+        } // end getInitialState
+
+        // Handle rPi connects.
+        $rootScope.socket.on('rPi connected', function()
+        {
+            getInitialState();
+        });
+
+        $rootScope.socket.on('rPi disconnected', function()
+        {
+            $rootScope.$apply(function()
+            {
+                $rootScope.currentSong = 0;
+                $rootScope.currentPos = 0;
+                $rootScope.requestedSongs = [];
+                $rootScope.songList = [];
+            });
+        });
+
+        // When we connect, we need to figure out what the current status is, and update ourselves correctly.
+        $rootScope.socket.on('connect', function()
+        {
+            getInitialState();
         });
     }]);
 
