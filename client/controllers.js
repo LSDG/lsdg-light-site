@@ -24,8 +24,14 @@ module.controller("RequestQueueCtrl", ["$scope", function($scope)
     $scope.queueSong = function(songIdx)
     {
         var song = $scope.songList[songIdx];
-        $scope.socket.emit('request song', { song: song.filename });
 
+        // Record that we've requested the particular song
+        var requested = $scope.getCookie("requested");
+        requested.push(song.filename);
+        $scope.setCookie("requested", requested);
+
+        // Let the server know about the song we requested.
+        $scope.socket.emit('request song', { song: song.filename });
     }; // end queueSong
 
     $scope.removeSong = function(songIdx)

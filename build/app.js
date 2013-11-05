@@ -8,6 +8,7 @@ window.app = angular.module("lightsite", [
         'ngResource',
         'ngRoute',
         'ngAnimate',
+        'ngCookies',
         'ui.bootstrap',
         'lightsite.templates',
         'lightsite.controllers'
@@ -19,13 +20,19 @@ window.app = angular.module("lightsite", [
             .when('/', {templateUrl: '/flatpages/playlist.html', controller: 'PlaylistCtrl as playlist'})
             .otherwise({redirectTo: '/'});
     }])
-    .run(['$rootScope', function($rootScope)
+    .run(['$rootScope', '$cookies', function($rootScope, $cookies)
     {
         $rootScope.currentSong = 0;
         $rootScope.currentPos = 0;
         $rootScope.requestedSongs = [];
         $rootScope.songList = [];
         $rootScope.returnPos = -1;
+
+        // If we don't have a cookie, set it to an empty list.
+        if($cookies.requested === undefined)
+        {
+            $cookies.requested = "[]";
+        } // end if
 
         //--------------------------------------------------------------------------------------------------------------
         // State Control
@@ -128,6 +135,21 @@ window.app = angular.module("lightsite", [
         {
             $rootScope.$apply(function(){
                 $rootScope.requestedSongs = data.songs;
+
+                var newRequested = [];
+                var requested = $rootScope.getCookie("requested");
+                requested.forEach(function(song)
+                {
+                    data.songs.forEach(function(newSong)
+                    {
+                        if(song == newSong.filename)
+                        {
+                            newRequested.push(song);
+                        } // end if
+                    });
+                });
+
+                $rootScope.setCookie("requested", newRequested);
             });
         });
 
@@ -227,6 +249,20 @@ window.app = angular.module("lightsite", [
         {
             getInitialState();
         });
+
+        //--------------------------------------------------------------------------------------------------------------
+        // Work around Angular's broken $cookie service
+        //--------------------------------------------------------------------------------------------------------------
+
+        $rootScope.getCookie = function(name)
+        {
+            return JSON.parse($cookies[name]);
+        }; // end if
+
+        $rootScope.setCookie = function(name, value)
+        {
+            $cookies[name] = JSON.stringify(value);
+        }; // end setCookie
     }]);
 
 //----------------------------------------------------------------------------------------------------------------------

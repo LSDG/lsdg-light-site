@@ -50,7 +50,7 @@ angular.module("/flatpages/playlist.html", []).run(["$templateCache", function($
     "                            <li class=\"list-group-item\" ng-repeat=\"song in requestedSongs\">\n" +
     "                                <img class=\"album\" ng-attr-src=\"{{ song.image.small }}\">\n" +
     "                                <span class=\"title\">{{ song.title }}</span>\n" +
-    "                                <button type=\"button\" class=\"close\" aria-hidden=\"true\" ng-click=\"removeSong($index)\">&times;</button>\n" +
+    "                                <button ng-if=\"getCookie('requested').indexOf(song.filename) != -1\" type=\"button\" class=\"close\" aria-hidden=\"true\" ng-click=\"removeSong($index)\">&times;</button>\n" +
     "                            </li>\n" +
     "                        </ul>\n" +
     "                    </div>\n" +

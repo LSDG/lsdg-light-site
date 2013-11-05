@@ -21,7 +21,7 @@
                             <li class="list-group-item" ng-repeat="song in requestedSongs">
                                 <img class="album" ng-attr-src="{{ song.image.small }}">
                                 <span class="title">{{ song.title }}</span>
-                                <button type="button" class="close" aria-hidden="true" ng-click="removeSong($index)">&times;</button>
+                                <button ng-if="getCookie('requested').indexOf(song.filename) != -1" type="button" class="close" aria-hidden="true" ng-click="removeSong($index)">&times;</button>
                             </li>
                         </ul>
                     </div>
