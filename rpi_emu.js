@@ -119,8 +119,14 @@ rpi.on('error', function(error)
     logger.error('shit:', error);
 });
 
-rpi.on('connect', function () {
+rpi.on('connect', function() {
     logger.debug('Connected!');
+});
+
+rpi.on('disconnect', function()
+{
+    logger.critical('Disconnected, exiting!');
+    process.kill();
 });
 
 rpi.on('get status', function(cb)

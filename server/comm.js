@@ -18,6 +18,7 @@ var requestedSongs = [];
 var songList = [];
 var currentPos = 0;
 var simulateTimer = null;
+var returnPos = -1;
 
 var rpiSocket = undefined;
 var clientChannel = app.channel('/songctrl');
@@ -72,12 +73,26 @@ function getNextSong()
 {
     if (requestedSongs.length > 0)
     {
+        // We don't already have a returnPos, and we're hitting the result queue, so we need to save our returnPos.
+        if(returnPos == -1)
+        {
+            // Record the next song to resume playing at
+            returnPos = currentSong + 1;
+        } // end if
+
         var song = requestedSongs[0];
         removeRequest(0);
         return song;
     } // end if
 
     var nextSongIdx = currentSong + 1;
+
+    // If we've recorded a returnPos, we set that as the next song to play, and clear the returnPos.
+    if(returnPos != -1)
+    {
+        nextSongIdx = returnPos;
+        returnPos = -1;
+    } // end if
 
     // If we've gone off the end of the list, we need to loop around.
     if(nextSongIdx >= songList.length)

@@ -25,6 +25,7 @@ window.app = angular.module("lightsite", [
         $rootScope.currentPos = 0;
         $rootScope.requestedSongs = [];
         $rootScope.songList = [];
+        $rootScope.returnPos = -1;
 
         //--------------------------------------------------------------------------------------------------------------
         // State Control
@@ -72,10 +73,23 @@ window.app = angular.module("lightsite", [
         {
             if ($rootScope.requestedSongs.length > 0)
             {
+                // We don't already have a returnPos, and we're hitting the result queue, so we need to save our returnPos.
+                if($rootScope.returnPos == -1)
+                {
+                    // Record the next song to resume playing at
+                    $rootScope.returnPos = $rootScope.currentSong + 1;
+                } // end if
+
                 return $rootScope.requestedSongs[0];
             } // end if
 
             var nextSongIdx = $rootScope.currentSong + 1;
+
+            // If we've recorded a returnPos, we set that as the next song to play.
+            if($rootScope.returnPos != -1)
+            {
+                nextSongIdx = $rootScope.returnPos;
+            } // end if
 
             // If we've gone off the end of the list, we need to loop around.
             if(nextSongIdx >= $rootScope.songList.length)
@@ -141,6 +155,11 @@ window.app = angular.module("lightsite", [
                 {
                     $rootScope.currentSong = getSongIndex(getSongByFilename(data.playing));
                     $rootScope.currentPos = data.position;
+
+                    if($rootScope.currentSong == $rootScope.returnPos)
+                    {
+                        $rootScope.returnPos = -1;
+                    } // end if
                 }
                 else
                 {
