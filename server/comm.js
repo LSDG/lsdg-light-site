@@ -97,7 +97,6 @@ function removeRequest(idx)
 
 function stop()
 {
-    console.log('stopping!');
     currentPos = 0;
     clearInterval(simulateTimer);
 } // end if
@@ -124,7 +123,6 @@ function simulateSong(song)
 
     simulateTimer = setInterval(function()
     {
-        console.log('sup, bros?', currentPos, song.duration);
         currentPos++;
         clientChannel.emit('status', { playing: (getCurrentSong() || {}).filename || "none", position: currentPos });
 
