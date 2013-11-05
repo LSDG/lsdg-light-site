@@ -8,7 +8,8 @@
     "omega-wf": "latest",
     "apac": "0.0.13",
     "socket.io-client": "~0.9.16",
-    "omega-logger": "~0.5.2"
+    "omega-logger": "~0.5.2",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

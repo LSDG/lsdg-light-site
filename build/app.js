@@ -135,7 +135,6 @@ window.app = angular.module("lightsite", [
 
         $rootScope.socket.on('status', function(data)
         {
-            console.log('status sent!');
             $rootScope.$apply(function()
             {
                 if(data.playing != "none")

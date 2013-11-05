@@ -4,6 +4,10 @@
 // @module comm.js
 //----------------------------------------------------------------------------------------------------------------------
 
+var async = require('async');
+
+var coverart = require('./utils/coverart');
+
 var app = require('omega-wf').app;
 var logger = require('omega-wf').logging.getLogger('comm');
 
@@ -194,11 +198,21 @@ app.channel('/rpi').on('connection', function (socket)
         // Store the song list
         songList = songs;
 
-        // Broadcast the song list to all clients
-        clientChannel.emit('song list', { songs: songList });
+        async.each(songList, function(song, cb)
+        {
+            coverart.getCoverArt(song.artist, song.title, function(image)
+            {
+                song.image = image;
+                cb();
+            })
+        }, function()
+        {
+            // Broadcast the song list to all clients
+            clientChannel.emit('song list', { songs: songList });
 
-        // Start playing the playlist
-        playNext();
+            // Start playing the playlist
+            playNext();
+        });
     });
 });
 
