@@ -103,11 +103,6 @@ format specified in the response.
             title: "Winter Wizard (Instrumental)",
             artist: "Trans-Siberian Orchestra",
             duration: 185,
-            image: {
-                small: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg',
-                medium: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg',
-                large: 'http://ecx.images-amazon.com/images/I/618lJLbXCiL._SL500_AA280_.jpg'
-            },
             filename: "TSO - Winter Wizard.mp3"
         },
         ...
