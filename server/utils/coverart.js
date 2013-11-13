@@ -23,7 +23,7 @@ function queryAWSForCoverArt(query, callback)
         'ResponseGroup': 'Images'
     }, function(results)
     {
-        if(results.ItemSearchResponse.Items.length > 0)
+        if(results.ItemSearchResponse && results.ItemSearchResponse.Items.length > 0)
         {
             var item = results.ItemSearchResponse.Items[0];
             var results = undefined;
