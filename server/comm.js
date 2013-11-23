@@ -174,6 +174,8 @@ app.channel('/rpi').on('connection', function (socket)
     {
         stop();
 
+        songList = [];
+        requestedSongs = [];
         rpiSocket = undefined;
         clientChannel.emit('rPi disconnected');
 
