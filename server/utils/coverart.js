@@ -55,9 +55,16 @@ function queryAWSForCoverArt(query, callback)
     });
 } // end queryAWSForCoverArt
 
-function getCoverArt(artist, title, callback)
+function getCoverArt(song, callback)
 {
-    queryAWSForCoverArt(artist + " - " + title, callback);
+    if(song.album)
+    {
+        queryAWSForCoverArt(song.artist + " - " + song.album, callback);
+    }
+    else
+    {
+        queryAWSForCoverArt(song.artist + " - " + song.title, callback);
+    } // end if
 } // end get CoverArt
 
 module.exports = {

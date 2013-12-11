@@ -220,7 +220,7 @@ app.channel('/rpi').on('connection', function (socket)
 
         async.each(songList, function(song, cb)
         {
-            coverart.getCoverArt(song.artist, song.title, function(image)
+            coverart.getCoverArt(song, function(image)
             {
                 song.image = image;
                 cb();
