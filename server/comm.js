@@ -195,8 +195,11 @@ app.channel('/rpi').on('connection', function (socket)
         // Tell our clients that we've finished playing the song
         clientChannel.emit('song finished', { song: data.song });
 
-        // Play the next song!
-        playNext();
+        if(songList.length > 0)
+        {
+            // Play the next song!
+            playNext();
+        } // end if
     });
 
     //------------------------------------------------------------------------------------------------------------------
