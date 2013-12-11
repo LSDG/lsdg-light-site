@@ -8,9 +8,9 @@ var util = require('util');
 OperationHelper = require('apac').OperationHelper;
 
 var opHelper = new OperationHelper({
-    awsId:     'AKIAJSZDJO7JRD2GR2EQ',
-    awsSecret: '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',
-    assocId:   'lschli-20'
+    awsId:     'AKIAJMNPDKJBDXNXIWGQ',
+    awsSecret: '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',
+    assocId:   'lls019-20'
 });
 
 //----------------------------------------------------------------------------------------------------------------------
